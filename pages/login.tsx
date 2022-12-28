@@ -9,10 +9,10 @@ const Login = () => {
           Streamget
         </h1>
         <p className="text-xl font-medium">
-          <span className="text-green-500">Spotify</span> widget for streamer
+          <span className="text-green-500">Spotify</span> widget for streaming
           apps
         </p>
-        <button className="select-none flex m-auto gap-1 items-center bg-green-500 py-1.5 px-5 rounded-sm mt-6 hover:bg-green-600 active:bg-green-700">
+        <button className="select-none flex m-auto gap-1 items-center bg-green-500 py-1.5 px-5 rounded mt-6 hover:bg-green-600 active:bg-green-700">
           <Image src={spotifyLogo} alt="spotify logo / login" width={17} />
           <span className="text-sm">Login</span>
         </button>
