@@ -1,25 +1,35 @@
 import { useState } from "react";
 import { Checkbox, ColorPicker, Option } from "./input";
-import Image from "next/image";
-import valorant from "../public/valorant.png";
-import overwatch2 from "../public/overwatch2.png";
-import lol from "../public/lol.png";
-import genshin from "../public/genshin.png";
+import WidgetPreview from "./widget_preview";
 
 const Homepage = () => {
   const [gamePreview, setGamePreview] = useState("Valorant");
+  const [widgetFont, setWidgetFont] = useState("");
+  const [widgetFontColor, setWidgetFontColor] = useState("");
+  const [textOutline, setTextOutline] = useState(false);
+  const [textOutlineStyles, setTextOutlineStyles] = useState({
+    textShadow: `-2px -2px #000, -2px -1px #000, -2px 0px #000,
+  -2px 1px #000, -2px 2px #000, -1px -2px #000, -1px -1px #000,
+  -1px 0px #000, -1px 1px #000, -1px 2px #000, 0px -2px #000,
+  0px -1px #000, 0px 0px #000, 0px 1px #000, 0px 2px #000,
+  1px -2px #000, 1px -1px #000, 1px 0px #000, 1px 1px #000,
+  1px 2px #000, 2px -2px #000, 2px -1px #000, 2px 0px #000,
+  2px 1px #000, 2px 2px #000`,
+  });
+  const [showTitle, setShowTitle] = useState(true);
+  const [showArtists, setShowArtists] = useState(true);
+  const [showAlbumCover, setShowAlbumCover] = useState(true);
 
-  const getPreviewImage = () => {
-    switch (gamePreview) {
-      case "Valorant":
-        return valorant;
-      case "Overwatch":
-        return overwatch2;
-      case "League of Legends":
-        return lol;
-      default:
-        return genshin;
-    }
+  const handleRestylingOutline = (color: string = "#000000") => {
+    setTextOutlineStyles({
+      textShadow: `-2px -2px ${color}, -2px -1px ${color}, -2px 0px ${color},
+    -2px 1px ${color}, -2px 2px ${color}, -1px -2px ${color}, -1px -1px ${color},
+    -1px 0px ${color}, -1px 1px ${color}, -1px 2px ${color}, 0px -2px ${color},
+    0px -1px ${color}, 0px 0px ${color}, 0px 1px ${color}, 0px 2px ${color},
+    1px -2px ${color}, 1px -1px ${color}, 1px 0px ${color}, 1px 1px ${color},
+    1px 2px ${color}, 2px -2px ${color}, 2px -1px ${color}, 2px 0px ${color},
+    2px 1px ${color}, 2px 2px ${color}`,
+    });
   };
 
   return (
@@ -30,9 +40,24 @@ const Homepage = () => {
           <div className="setup-list">
             <div id="setup-checkboxes" className="flex gap-12">
               <div className="flex flex-col">
-                <Checkbox id="song_title" name="Song Title" />
-                <Checkbox id="artist" name="Artist" />
-                <Checkbox id="album_cover" name="Album Cover" />
+                <Checkbox
+                  id="song_title"
+                  name="Song Title"
+                  getValue={(value: boolean) => setShowTitle(value)}
+                  defaultChecked={true}
+                />
+                <Checkbox
+                  id="artists"
+                  name="Artists"
+                  getValue={(value: boolean) => setShowArtists(value)}
+                  defaultChecked={true}
+                />
+                <Checkbox
+                  id="album_cover"
+                  name="Album Cover"
+                  getValue={(value: boolean) => setShowAlbumCover(value)}
+                  defaultChecked={true}
+                />
               </div>
               <div className="flex flex-col">
                 <Checkbox id="next_music" name="Next Music" />
@@ -55,18 +80,23 @@ const Homepage = () => {
                       "Poppins",
                       "Roboto",
                       "Montserrat",
-                      "Montega",
+                      "Montaga",
                       "Oswald",
                       "Raleway",
                       "Kanit",
-                      "Balsamic",
+                      "Balsamiq",
                       "Bebas Neue",
                       "Lobster",
                     ]}
+                    getValue={(value: string) => setWidgetFont(value)}
                   />
                 </div>
                 <div className="flex gap-10 items-center">
-                  <ColorPicker id="font_color" label="Font Color" />
+                  <ColorPicker
+                    id="font_color"
+                    label="Font Color"
+                    getValue={(value: string) => setWidgetFontColor(value)}
+                  />
                 </div>
               </div>
               <div className="flex flex-col text-sm gap-3.5">
@@ -79,10 +109,16 @@ const Homepage = () => {
                     className="text-sm -top-2.5 left-3"
                     styles={{ marginBottom: 0 }}
                     hideLabel
+                    getValue={(value: boolean) => setTextOutline(value)}
                   />
                 </div>
                 <div className="flex gap-10 items-center w-full">
-                  <ColorPicker id="outline_color" label="Outline Color" />
+                  <ColorPicker
+                    id="outline_color"
+                    label="Outline Color"
+                    defaultColor="#000000"
+                    getValue={(value: string) => handleRestylingOutline(value)}
+                  />
                 </div>
               </div>
             </div>
@@ -101,16 +137,16 @@ const Homepage = () => {
             className="mb-5"
             getValue={(value: any) => setGamePreview(value)}
           />
-          <div
-            id="image-preview-wrapper"
-            className="w-[22.5rem] h-80 border border-slate-800 overflow-clip mb-4"
-          >
-            <Image
-              src={getPreviewImage()}
-              alt="preview background image"
-              priority
-            />
-          </div>
+          <WidgetPreview
+            gamePreview={gamePreview}
+            widgetFont={widgetFont}
+            widgetFontColor={widgetFontColor}
+            textOutline={textOutline}
+            textOutlineStyles={textOutlineStyles}
+            showTitle={showTitle}
+            showArtists={showArtists}
+            showAlbumCover={showAlbumCover}
+          />
           <div
             id="copy-result-container"
             className="text-sm flex gap-2 max-w-[358px]"
@@ -119,7 +155,7 @@ const Homepage = () => {
               id="url-preview"
               className="border rounded py-1.5 px-2 truncate select-none"
             >
-              https://streamget.io/widget?title=true&timestamp...
+              https://streamget.io/widget?title=true&timestamp
             </div>
             <button className="px-3 bg-green-500 rounded">Copy</button>
           </div>

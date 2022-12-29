@@ -115,6 +115,16 @@ nav #nav-wrapper > a:hover {
   background: rgb(51 65 85) !important;
 }
 
+.text-outline {
+  text-shadow: -2px -2px #2fc1a9, -2px -1px #2fc1a9, -2px 0px #2fc1a9,
+    -2px 1px #2fc1a9, -2px 2px #2fc1a9, -1px -2px #2fc1a9, -1px -1px #2fc1a9,
+    -1px 0px #2fc1a9, -1px 1px #2fc1a9, -1px 2px #2fc1a9, 0px -2px #2fc1a9,
+    0px -1px #2fc1a9, 0px 0px #2fc1a9, 0px 1px #2fc1a9, 0px 2px #2fc1a9,
+    1px -2px #2fc1a9, 1px -1px #2fc1a9, 1px 0px #2fc1a9, 1px 1px #2fc1a9,
+    1px 2px #2fc1a9, 2px -2px #2fc1a9, 2px -1px #2fc1a9, 2px 0px #2fc1a9,
+    2px 1px #2fc1a9, 2px 2px #2fc1a9;
+}
+
 /* @media (prefers-color-scheme: dark) {
   html {
     color-scheme: dark;

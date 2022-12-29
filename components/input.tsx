@@ -8,6 +8,8 @@ interface CheckboxProps {
   className?: string;
   styles?: object;
   hideLabel?: boolean;
+  getValue?: Function;
+  defaultChecked?: boolean;
 }
 export const Checkbox = ({
   name,
@@ -15,10 +17,18 @@ export const Checkbox = ({
   className,
   styles,
   hideLabel = false,
+  getValue,
+  defaultChecked = false,
 }: CheckboxProps) => {
   return (
     <label className={`checkbox-container ${className}`} style={styles}>
-      <input type="checkbox" name={name} id={id} />
+      <input
+        type="checkbox"
+        name={name}
+        id={id}
+        defaultChecked={defaultChecked}
+        onChange={(e) => getValue && getValue(e.target.checked)}
+      />
       <span className="checkmark" />
       {!hideLabel && name}
     </label>
@@ -79,9 +89,16 @@ export const Option = ({ labels, className, getValue }: OptionProps) => {
 interface ColorPickerProps {
   id: string;
   label: string;
+  getValue?: Function;
+  defaultColor?: string;
 }
 
-export const ColorPicker = ({ id, label }: ColorPickerProps) => {
+export const ColorPicker = ({
+  id,
+  label,
+  getValue,
+  defaultColor,
+}: ColorPickerProps) => {
   return (
     <div className="color-picker-container flex items-center cursor-pointer gap-3 w-full justify-between">
       <label htmlFor={id} className="cursor-pointer">
@@ -92,7 +109,8 @@ export const ColorPicker = ({ id, label }: ColorPickerProps) => {
         name={id}
         id={id}
         className="w-[2rem] bg-transparent rounded border px-1 cursor-pointer"
-        defaultValue="#ffffff"
+        defaultValue={defaultColor || "#ffffff"}
+        onChange={(e) => getValue && getValue(e.target.value)}
       />
     </div>
   );
