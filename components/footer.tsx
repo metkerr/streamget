@@ -1,6 +1,6 @@
 const Footer = () => {
   return (
-    <footer className="text-center w-full text-sm text-[#565F68] absolute bottom-0">
+    <footer className="text-center w-full text-[10px] text-[#565F68] mt-36 container">
       <a
         href="https://github.com/metkerr"
         className="p-2 hover:underline active:opacity-70"

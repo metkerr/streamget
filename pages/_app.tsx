@@ -4,12 +4,12 @@ import { Poppins } from "@next/font/google";
 
 const poppins = Poppins({
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+  weight: ["500", "600", "700"],
 });
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <div className={poppins.className}>
+    <div className={`${poppins.className} container mx-auto px-10 xl:px-5`}>
       <Component {...pageProps} />
     </div>
   );

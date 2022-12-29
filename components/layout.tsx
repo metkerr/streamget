@@ -21,10 +21,10 @@ const Layout = ({ children }: Props) => {
         <meta name="og:title" content={siteTitle} />
         <meta name="twitter:card" content="summary_large_image" />
       </Head>
-      <header>
+      <header className="mb-20">
         <Navbar />
       </header>
-      <main>{children}</main>
+      <main className="mb-4">{children}</main>
       <Footer />
     </>
   );
