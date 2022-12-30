@@ -9,14 +9,15 @@ const Homepage = () => {
   const [widgetFont, setWidgetFont] = useState("Poppins");
   const [widgetFontColor, setWidgetFontColor] = useState("#ffffff");
   const [textOutline, setTextOutline] = useState(false);
+  const [outlineColor, setOutlineColor] = useState("#000");
   const [textOutlineStyles, setTextOutlineStyles] = useState({
-    textShadow: `-2px -2px #000, -2px -1px #000, -2px 0px #000,
-    -2px 1px #000, -2px 2px #000, -1px -2px #000, -1px -1px #000,
-    -1px 0px #000, -1px 1px #000, -1px 2px #000, 0px -2px #000,
-    0px -1px #000, 0px 0px #000, 0px 1px #000, 0px 2px #000,
-    1px -2px #000, 1px -1px #000, 1px 0px #000, 1px 1px #000,
-    1px 2px #000, 2px -2px #000, 2px -1px #000, 2px 0px #000,
-    2px 1px #000, 2px 2px #000`,
+    textShadow: `-1px -1px #000, -1px -1px #000, -1px 0px #000,
+    -1px 1px #000, -1px 1px #000, -1px -1px #000, -1px -1px #000,
+    -1px 0px #000, -1px 1px #000, -1px 1px #000, 0px -1px #000,
+    0px -1px #000, 0px 0px #000, 0px 1px #000, 0px 1px #000,
+    1px -1px #000, 1px -1px #000, 1px 0px #000, 1px 1px #000,
+    1px 1px #000, 1px -1px #000, 1px -1px #000, 1px 0px #000,
+    1px 1px #000, 1px 1px #000`,
   });
   const [showTitle, setShowTitle] = useState(true);
   const [showArtists, setShowArtists] = useState(true);
@@ -31,16 +32,18 @@ const Homepage = () => {
   const [copy, setCopy] = useState("Copy");
 
   const handleRestylingOutline = (color: string = "#000000") => {
+    setOutlineColor(color);
     setTextOutlineStyles({
-      textShadow: `-2px -2px ${color}, -2px -1px ${color}, -2px 0px ${color},
-      -2px 1px ${color}, -2px 2px ${color}, -1px -2px ${color}, -1px -1px ${color},
-      -1px 0px ${color}, -1px 1px ${color}, -1px 2px ${color}, 0px -2px ${color},
-      0px -1px ${color}, 0px 0px ${color}, 0px 1px ${color}, 0px 2px ${color},
-      1px -2px ${color}, 1px -1px ${color}, 1px 0px ${color}, 1px 1px ${color},
-      1px 2px ${color}, 2px -2px ${color}, 2px -1px ${color}, 2px 0px ${color},
-      2px 1px ${color}, 2px 2px ${color}`,
+      textShadow: `-1px -1px ${color}, -1px -1px ${color}, -1px 0px ${color},
+      -1px 1px ${color}, -1px 1px ${color}, -1px -1px ${color}, -1px -1px ${color},
+      -1px 0px ${color}, -1px 1px ${color}, -1px 1px ${color}, 0px -1px ${color},
+      0px -1px ${color}, 0px 0px ${color}, 0px 1px ${color}, 0px 1px ${color},
+      1px -1px ${color}, 1px -1px ${color}, 1px 0px ${color}, 1px 1px ${color},
+      1px 1px ${color}, 1px -1px ${color}, 1px -1px ${color}, 1px 0px ${color},
+      1px 1px ${color}, 1px 1px ${color}`,
     });
   };
+  console.log(outlineColor);
 
   const handleWidgetSize = (size: string = "Medium") => {
     setWSize(size);
@@ -55,10 +58,10 @@ const Homepage = () => {
 
   const handleCopy = () => {
     navigator.clipboard.writeText(
-      `http://localhost:3000/widget?title=${showTitle}&artists=${showArtists}&cover=${showAlbumCover}&timestamp=${showTimestamp}&size=${wSize}&fontFamily=${widgetFont}&fontColor=${encodeURIComponent(
+      `http://localhost:3000/widget?title=${showTitle}&artists=${showArtists}&cover=${showAlbumCover}&timestamp=${showTimestamp}&fontFamily=${widgetFont}&fontColor=${encodeURIComponent(
         widgetFontColor
       )}&outline=${textOutline}&outlineColor=${encodeURIComponent(
-        JSON.stringify(textOutlineStyles)
+        outlineColor
       )}`
     );
     setCopy("Copied!");
@@ -202,9 +205,7 @@ const Homepage = () => {
               id="url-preview"
               className="border rounded py-1.5 px-2 truncate"
             >
-              {`https://streamget.app/widget?title=${showTitle}&artists=${showArtists}&cover=${showAlbumCover}&timestamp=${showTimestamp}&size=${wSize}&fontFamily=${widgetFont}&fontColor=${widgetFontColor}&outline=${textOutline}&outlineColor=${JSON.stringify(
-                textOutlineStyles
-              )}`}
+              {`https://streamget.app/widget?title=${showTitle}&artists=${showArtists}&cover=${showAlbumCover}&timestamp=${showTimestamp}&fontFamily=${widgetFont}&fontColor=${widgetFontColor}&outline=${textOutline}&outlineColor=${outlineColor}`}
             </div>
             <button
               className="px-3 bg-green-500 rounded hover:bg-green-600 active:bg-green-700"

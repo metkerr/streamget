@@ -2,17 +2,8 @@ import { GetServerSideProps } from "next";
 import WidgetPreview from "../components/widget_preview";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  let widgetSize;
-  if (context.query.size === "Small") {
-    widgetSize = { title: 3.75, artists: 2.25, cover: 165 };
-  } else if (context.query.size === "Medium") {
-    widgetSize = { title: 5.32, artists: 3.72, cover: 300 };
-  } else {
-    widgetSize = { title: 6.9, artists: 5.8, cover: 425 }; //large
-  }
   return {
     props: {
-      widgetSize,
       ...context.query,
     },
   };
@@ -23,7 +14,6 @@ interface WidgetProps {
   artists: string;
   cover: string;
   timestamp: string;
-  widgetSize: { title: number; artists: number; cover: number };
   fontFamily: string;
   fontColor: string;
   outline: string;
@@ -35,12 +25,23 @@ const Widget = ({
   artists,
   cover,
   timestamp,
-  widgetSize,
   fontFamily,
   fontColor,
   outline,
   outlineColor,
 }: WidgetProps) => {
+  const widgetSize = { title: 4, artists: 3, cover: 250 };
+
+  const textOutlineStyles = {
+    textShadow: `-4px -4px ${outlineColor}, -4px -2px ${outlineColor}, -4px 1px ${outlineColor},
+  -4px 2px ${outlineColor}, -4px 4px ${outlineColor}, -2px -4px ${outlineColor}, -2px -2px ${outlineColor},
+  -2px 0px ${outlineColor}, -2px 2px ${outlineColor}, -2px 4px ${outlineColor}, 0px -4px ${outlineColor},
+  0px -2px ${outlineColor}, 0px 0px ${outlineColor}, 0px 2px ${outlineColor}, 0px 4px ${outlineColor},
+  2px -4px ${outlineColor}, 2px -2px ${outlineColor}, 2px 0px ${outlineColor}, 2px 2px ${outlineColor},
+  2px 4px ${outlineColor}, 4px -4px ${outlineColor}, 4px -2px ${outlineColor}, 4px 0px ${outlineColor},
+  4px 2px ${outlineColor}, 4px 4px ${outlineColor}`,
+  };
+
   return (
     <>
       <WidgetPreview
@@ -50,7 +51,7 @@ const Widget = ({
         showTimestamp={timestamp == "true"}
         showAlbumCover={cover == "true"}
         textOutline={outline == "true"}
-        textOutlineStyles={JSON.parse(outlineColor)}
+        textOutlineStyles={textOutlineStyles}
         widgetFont={fontFamily}
         widgetFontColor={fontColor}
         widgetSize={widgetSize}

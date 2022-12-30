@@ -132,6 +132,7 @@ const WidgetPreview = ({
           style={{
             color: (widgetFontColor && widgetFontColor) || undefined,
           }}
+          className="shrink-0"
         >
           {showAlbumCover && (
             <Image
@@ -143,8 +144,8 @@ const WidgetPreview = ({
           )}
           {showTimestamp && (
             <p
-              className={`text-[11px] opacity-60 scale-75 block text-center ${
-                !isNotPreview ? "-mb-[1.075rem]" : "-mb-[8rem]"
+              className={`text-[11px] scale-75 block text-center ${
+                !isNotPreview ? "-mb-[1.075rem]" : "-mb-[5rem]"
               } `}
               style={getStyles("timestamp") || {}}
             >
@@ -170,11 +171,18 @@ const WidgetPreview = ({
           }}
         >
           {showTitle && (
-            <p style={getStyles("title") || {}}>Someone Else's Dream</p>
+            <p
+              className={`truncate ${isNotPreview && "w-[55rem]"}`}
+              style={getStyles("title") || {}}
+            >
+              Someone Else's Dream
+            </p>
           )}
           {showArtists && (
             <p
-              className="text-[11px] opacity-60"
+              className={`text-[11px] text-neutral-300 truncate ${
+                isNotPreview && "w-[55rem]"
+              }`}
               style={getStyles("artists") || {}}
             >
               Absofacto
