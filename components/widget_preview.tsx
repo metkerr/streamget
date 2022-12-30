@@ -60,6 +60,9 @@ interface WidgetProps {
   showTitle?: boolean;
   showArtists?: boolean;
   showAlbumCover?: boolean;
+  showTimestamp?: boolean;
+  widgetSize?: { title: number; artists: number; cover: number };
+  isNotPreview?: boolean;
 }
 
 const WidgetPreview = ({
@@ -71,6 +74,9 @@ const WidgetPreview = ({
   showTitle = true,
   showArtists = true,
   showAlbumCover = true,
+  widgetSize,
+  showTimestamp,
+  isNotPreview,
 }: WidgetProps) => {
   const getPreviewImage = () => {
     switch (gamePreview) {
@@ -84,19 +90,68 @@ const WidgetPreview = ({
         return genshin;
     }
   };
+
+  const getStyles = (style: string) => {
+    if (style === "title") {
+      if (textOutline) {
+        return { fontSize: `${widgetSize?.title}rem`, ...textOutlineStyles };
+      } else {
+        return { fontSize: `${widgetSize?.title}rem` };
+      }
+    } else {
+      if (textOutline) {
+        return { fontSize: `${widgetSize?.artists}rem`, ...textOutlineStyles };
+      } else {
+        return { fontSize: `${widgetSize?.artists}rem` };
+      }
+    }
+  };
+
   return (
     <div
       id="image-preview-wrapper"
-      className="w-[22.5rem] h-80 border border-slate-800 overflow-clip mb-4 relative"
+      className={`${
+        !isNotPreview &&
+        "w-[22.5rem] h-80 border border-slate-800 overflow-clip mb-4 relative"
+      }`}
     >
-      <Image src={getPreviewImage()} alt="preview background image" priority />
+      {!isNotPreview && (
+        <Image
+          src={getPreviewImage()}
+          alt="preview background image"
+          priority
+        />
+      )}
       <div
         id="widget-preview"
-        className="absolute right-5 bottom-16 text-sm flex gap-3 items-center"
+        className={`${
+          !isNotPreview ? "absolute right-5 bottom-16 gap-3" : "gap-12"
+        } text-sm flex items-center`}
       >
-        {showAlbumCover && (
-          <Image src={coverAlbum} width={50} height={50} alt="album cover" />
-        )}
+        <div
+          style={{
+            color: (widgetFontColor && widgetFontColor) || undefined,
+          }}
+        >
+          {showAlbumCover && (
+            <Image
+              src={coverAlbum}
+              width={widgetSize?.cover}
+              height={widgetSize?.cover}
+              alt="album cover"
+            />
+          )}
+          {showTimestamp && (
+            <p
+              className={`text-[11px] opacity-60 scale-75 block text-center ${
+                !isNotPreview ? "-mb-[1.075rem]" : "-mb-[8rem]"
+              } `}
+              style={getStyles("timestamp") || {}}
+            >
+              2:15/3:25
+            </p>
+          )}
+        </div>
         <div
           id="preview-title"
           className={clsx({
@@ -115,14 +170,12 @@ const WidgetPreview = ({
           }}
         >
           {showTitle && (
-            <p style={(textOutline && textOutlineStyles) || {}}>
-              Someone Else's Dream
-            </p>
+            <p style={getStyles("title") || {}}>Someone Else's Dream</p>
           )}
           {showArtists && (
             <p
               className="text-[11px] opacity-60"
-              style={(textOutline && textOutlineStyles) || {}}
+              style={getStyles("artists") || {}}
             >
               Absofacto
             </p>
