@@ -100,9 +100,16 @@ const WidgetPreview = ({
       }
     } else {
       if (textOutline) {
-        return { fontSize: `${widgetSize?.artists}rem`, ...textOutlineStyles };
+        return {
+          fontSize: `${widgetSize?.artists}rem`,
+          color: widgetFontColor || "#c5c5c5",
+          ...textOutlineStyles,
+        };
       } else {
-        return { fontSize: `${widgetSize?.artists}rem` };
+        return {
+          fontSize: `${widgetSize?.artists}rem`,
+          color: widgetFontColor || "#c5c5c5",
+        };
       }
     }
   };
@@ -180,9 +187,7 @@ const WidgetPreview = ({
           )}
           {showArtists && (
             <p
-              className={`text-[11px] text-neutral-300 truncate ${
-                isNotPreview && "w-[55rem]"
-              }`}
+              className={`text-[11px] truncate ${isNotPreview && "w-[55rem]"}`}
               style={getStyles("artists") || {}}
             >
               Absofacto

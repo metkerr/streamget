@@ -7,7 +7,7 @@ const Homepage = () => {
   const router = useRouter();
   const [gamePreview, setGamePreview] = useState("Valorant");
   const [widgetFont, setWidgetFont] = useState("Poppins");
-  const [widgetFontColor, setWidgetFontColor] = useState("#ffffff");
+  const [widgetFontColor, setWidgetFontColor] = useState("");
   const [textOutline, setTextOutline] = useState(false);
   const [outlineColor, setOutlineColor] = useState("#000");
   const [textOutlineStyles, setTextOutlineStyles] = useState({
@@ -43,7 +43,6 @@ const Homepage = () => {
       1px 1px ${color}, 1px 1px ${color}`,
     });
   };
-  console.log(outlineColor);
 
   const handleWidgetSize = (size: string = "Medium") => {
     setWSize(size);
