@@ -2,6 +2,15 @@ import Image from "next/image";
 import spotifyLogo from "../public/logo.png";
 
 const Login = () => {
+  const handleLogin = async () => {
+    const scope = encodeURIComponent(
+      "user-read-private user-read-email user-read-playback-state"
+    );
+    const AUTH_URL = `https://accounts.spotify.com/authorize?client_id=${process.env.NEXT_PUBLIC_CLIENT_ID}&response_type=code&redirect_uri=${process.env.NEXT_PUBLIC_REDIRECT_URI}&scope=${scope}`;
+
+    window.location.href = AUTH_URL; //redirect to spotify auth
+  };
+
   return (
     <main className="flex min-h-screen min-w-screen">
       <div id="login-wrapper" className="m-auto text-center">
@@ -12,7 +21,10 @@ const Login = () => {
           <span className="text-green-500">Spotify</span> widget for streaming
           apps
         </p>
-        <button className="select-none flex m-auto gap-1 items-center bg-green-500 py-1.5 px-5 rounded mt-6 hover:bg-green-600 active:bg-green-700">
+        <button
+          className="select-none flex m-auto gap-1 items-center bg-green-500 py-1.5 px-5 rounded mt-6 hover:bg-green-600 active:bg-green-700"
+          onClick={handleLogin}
+        >
           <Image src={spotifyLogo} alt="spotify logo / login" width={17} />
           <span className="text-sm">Login</span>
         </button>

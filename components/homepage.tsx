@@ -1,10 +1,12 @@
-import { useRouter } from "next/router";
 import { useState } from "react";
 import { Checkbox, ColorPicker, Option } from "./input";
 import WidgetPreview from "./widget_preview";
 
-const Homepage = () => {
-  const router = useRouter();
+interface HomepageProps {
+  accessToken: string;
+}
+
+const Homepage = ({ accessToken }: HomepageProps) => {
   const [gamePreview, setGamePreview] = useState("Valorant");
   const [widgetFont, setWidgetFont] = useState("Poppins");
   const [widgetFontColor, setWidgetFontColor] = useState("");
@@ -23,7 +25,6 @@ const Homepage = () => {
   const [showArtists, setShowArtists] = useState(true);
   const [showAlbumCover, setShowAlbumCover] = useState(true);
   const [showTimestamp, setShowTimestamp] = useState(false);
-  const [wSize, setWSize] = useState("Medium");
   const [widgetSize, setWidgetSize] = useState({
     title: 0.8125,
     artists: 0.6875,
@@ -45,7 +46,6 @@ const Homepage = () => {
   };
 
   const handleWidgetSize = (size: string = "Medium") => {
-    setWSize(size);
     if (size === "Small") {
       setWidgetSize({ title: 0.625, artists: 0.4375, cover: 35 });
     } else if (size === "Medium") {
