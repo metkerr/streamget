@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
 import clsx from "clsx";
+import { signOut } from "next-auth/react";
 
 const Navbar = () => {
   const router = useRouter();
@@ -29,7 +30,9 @@ const Navbar = () => {
         >
           about
         </Link>
-        <Link href="/login">logout</Link>
+        <Link href="/login" onClick={() => signOut()}>
+          logout
+        </Link>
       </div>
     </nav>
   );
