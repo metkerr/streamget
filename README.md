@@ -1,36 +1,100 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Streamget (Streaming Widget - Spotify) - ⚒ Work in progress
 
-## Getting Started
+This is a Spotify widget for streamer works with (OBS, streamlabs, etc). user can insert and get their current play song into their streaming layout.
 
-First, run the development server:
+## Table of contents
 
-```bash
-npm run dev
-# or
-yarn dev
+- [Streamget (Streaming Widget - Spotify) - ⚒ Work in progress](#streamget-streaming-widget---spotify----work-in-progress)
+  - [Table of contents](#table-of-contents)
+  - [Overview](#overview)
+    - [The challenge](#the-challenge)
+    - [Screenshot](#screenshot)
+    - [Links](#links)
+  - [My process](#my-process)
+    - [Design](#design)
+    - [Built with](#built-with)
+  - [Author](#author)
+  - [⚒ Usage](#-usage)
+    - [👥 Clone the repo](#-clone-the-repo)
+    - [🔐 Setup .env](#-setup-env)
+    - [📦 Install dependencies](#-install-dependencies)
+    - [✨ Start/Run the app](#-startrun-the-app)
+
+## Overview
+
+### The challenge
+
+Users should be able to:
+
+- Sign in with their spotify account
+- Setup & styling the widget.
+- See their spotify currently playing song
+- Get the widget url for their streaming apps.
+
+### Screenshot
+
+![Homepage](./screenshots/streamget_ss.png)
+
+### Links
+
+- Repo URL: [Github](https://github.com/metkerr/streamget.git)
+
+- Live Site URL: [Live on Vercel](https://streamget-metkerr.vercel.app/)
+
+## My process
+
+### Design
+
+- [Mockup design with Figma](https://www.figma.com/file/0VfYnpYFnKhBdYkGPnI4TO/Streamget-Webapp?node-id=0%3A1&t=NZJRgk2wQz7HKSJd-1)
+
+### Built with
+
+- Semantic HTML5 markup
+- [Next JS](https://nextjs.org/) - JS Framework
+- [Typescript](https://www.typescriptlang.org/) - JS but cooler
+- [Tailwind](https://tailwindcss.com/) - For styles
+- [Spotify API](https://developer.spotify.com/) - API
+
+## Author
+
+- Website - [Metker](https://metkerr.github.io/)
+- Frontend Mentor - [@metkerr](https://www.frontendmentor.io/profile/metkerr)
+- Twitter - [@metkerr](https://twitter.com/metkerr)
+
+## ⚒ Usage
+
+### 👥 Clone the repo
+
+```shell
+$ git clone https://github.com/metkerr/streamget.git
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 🔐 Setup .env
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+```shell
+$ touch .env.local
+```
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+Insert env data:
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+```
+CLIENT_ID=INSERT_YOUR_CLIENT_ID_HERE
+CLIENT_SECRET=INSERT_YOUR_SECRET_HERE
+NEXTAUTH_URL=http://localhost:3000/api/auth
+NEXTAUTH_SECRET=streamget
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+_you can get your CLIENT_ID & CLIENT_SECRET from [spotify developer dashboard](https://developer.spotify.com/dashboard)_
 
-## Learn More
+### 📦 Install dependencies
 
-To learn more about Next.js, take a look at the following resources:
+```shell
+$ cd streamget
+$ npm install
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### ✨ Start/Run the app
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+```shell
+$ npm run dev
+```
