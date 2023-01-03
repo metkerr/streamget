@@ -1,4 +1,4 @@
-import coverAlbum from "../public/albumcover.png";
+import sampleAlbumCover from "../public/albumcover.png";
 import clsx from "clsx";
 import Image from "next/image";
 import valorant from "../public/valorant.png";
@@ -16,6 +16,7 @@ import {
   Bebas_Neue,
   Lobster,
 } from "@next/font/google";
+import insertComas from "../lib/insertComas";
 
 const roboto = Roboto({ subsets: ["latin"], weight: ["500", "700"] });
 const montserrat = Montserrat({
@@ -63,6 +64,12 @@ interface WidgetProps {
   showTimestamp?: boolean;
   widgetSize?: { title: number; artists: number; cover: number };
   isNotPreview?: boolean;
+  artists?: [{ name: string }];
+  name?: string;
+  progress_ms?: number;
+  duration_ms?: number;
+  timestamp?: number;
+  albumImages?: (string | number)[];
 }
 
 const WidgetPreview = ({
@@ -77,7 +84,17 @@ const WidgetPreview = ({
   widgetSize,
   showTimestamp,
   isNotPreview,
+  artists = [{ name: "Absofacto" }],
+  name = "Someone Else's Dream",
+  duration_ms,
+  progress_ms,
+  timestamp,
+  albumImages = [],
 }: WidgetProps) => {
+  //@ts-ignore
+  const coverAlbum = albumImages[1]?.url || albumImages[0]?.url || null;
+  // ^^ get medium size index 1 otherwise get any size on index 0 ^^
+
   const getPreviewImage = () => {
     switch (gamePreview) {
       case "Valorant":
@@ -143,10 +160,11 @@ const WidgetPreview = ({
         >
           {showAlbumCover && (
             <Image
-              src={coverAlbum}
+              src={coverAlbum || sampleAlbumCover}
               width={widgetSize?.cover}
               height={widgetSize?.cover}
               alt="album cover"
+              priority
             />
           )}
           {showTimestamp && (
@@ -179,18 +197,22 @@ const WidgetPreview = ({
         >
           {showTitle && (
             <p
-              className={`truncate ${isNotPreview && "w-[55rem]"}`}
+              className={`truncate ${
+                isNotPreview ? "w-[55rem]" : "max-w-[12rem]"
+              }`}
               style={getStyles("title") || {}}
             >
-              Someone Else's Dream
+              {name}
             </p>
           )}
           {showArtists && (
             <p
-              className={`text-[11px] truncate ${isNotPreview && "w-[55rem]"}`}
+              className={`text-[11px] truncate ${
+                isNotPreview ? "w-[55rem]" : "max-w-[12rem]"
+              }`}
               style={getStyles("artists") || {}}
             >
-              Absofacto
+              {insertComas(artists)}
             </p>
           )}
         </div>

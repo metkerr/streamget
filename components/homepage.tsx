@@ -3,10 +3,16 @@ import { Checkbox, ColorPicker, Option } from "./input";
 import WidgetPreview from "./widget_preview";
 
 interface HomepageProps {
-  accessToken: string;
+  artists?: [{ name: string }];
+  name?: string;
+  duration_ms?: number;
+  progress_ms?: number;
+  timestamp?: number;
+  images?: [];
 }
 
-const Homepage = ({ accessToken }: HomepageProps) => {
+const Homepage = (props: HomepageProps) => {
+  const { artists, name, duration_ms, progress_ms, timestamp, images } = props;
   const [gamePreview, setGamePreview] = useState("Valorant");
   const [widgetFont, setWidgetFont] = useState("Poppins");
   const [widgetFontColor, setWidgetFontColor] = useState("");
@@ -57,9 +63,9 @@ const Homepage = ({ accessToken }: HomepageProps) => {
 
   const handleCopy = () => {
     navigator.clipboard.writeText(
-      `http://localhost:3000/widget?title=${showTitle}&artists=${showArtists}&cover=${showAlbumCover}&timestamp=${showTimestamp}&fontFamily=${widgetFont}&fontColor=${encodeURIComponent(
+      `http://localhost:3000/widget?sTitle=${showTitle}&sArtists=${showArtists}&sCover=${showAlbumCover}&sTimestamp=${showTimestamp}&fontFamily=${widgetFont}&fontColor=${encodeURIComponent(
         widgetFontColor
-      )}&outline=${textOutline}&outlineColor=${encodeURIComponent(
+      )}&sOutline=${textOutline}&outlineColor=${encodeURIComponent(
         outlineColor
       )}`
     );
@@ -195,6 +201,12 @@ const Homepage = ({ accessToken }: HomepageProps) => {
             showAlbumCover={showAlbumCover}
             widgetSize={widgetSize}
             showTimestamp={showTimestamp}
+            artists={artists}
+            name={name}
+            progress_ms={progress_ms}
+            duration_ms={duration_ms}
+            timestamp={timestamp}
+            albumImages={images}
           />
           <div
             id="copy-result-container"
@@ -204,7 +216,7 @@ const Homepage = ({ accessToken }: HomepageProps) => {
               id="url-preview"
               className="border rounded py-1.5 px-2 truncate"
             >
-              {`https://streamget.app/widget?title=${showTitle}&artists=${showArtists}&cover=${showAlbumCover}&timestamp=${showTimestamp}&fontFamily=${widgetFont}&fontColor=${widgetFontColor}&outline=${textOutline}&outlineColor=${outlineColor}`}
+              {`https://streamget.app/widget?sTitle=${showTitle}&sArtists=${showArtists}&sCover=${showAlbumCover}&sTimestamp=${showTimestamp}&fontFamily=${widgetFont}&fontColor=${widgetFontColor}&sOutline=${textOutline}&outlineColor=${outlineColor}`}
             </div>
             <button
               className="px-3 bg-green-500 rounded hover:bg-green-600 active:bg-green-700"

@@ -16,13 +16,27 @@ export default NextAuth({
   ],
   callbacks: {
     async session({ session, token }) {
-      // Send properties to the client, like an access_token and user id from a provider.
+      //@ts-ignore
+      session.user!.id = token.id;
       //@ts-ignore
       session.accessToken = token.accessToken;
-      //@ts-ignore
-      session.user.id = token.id;
-
       return session;
+    },
+    async jwt({ token, user, account }) {
+      if (user) {
+        token.id = user.id;
+      }
+      if (account) {
+        token.accessToken = account.access_token;
+      }
+      return token;
+    },
+    async redirect({ url, baseUrl }) {
+      // Allows relative callback URLs
+      if (url.startsWith("/")) return `${baseUrl}${url}`;
+      // Allows callback URLs on the same origin
+      else if (new URL(url).origin === baseUrl) return url;
+      return baseUrl;
     },
   },
 });

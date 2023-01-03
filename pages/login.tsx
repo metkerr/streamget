@@ -4,8 +4,8 @@ import { signIn, useSession } from "next-auth/react";
 import Loading from "../components/loading";
 
 const Login = () => {
-  const { status } = useSession();
-  if (status === "authenticated") {
+  const { data: session, status } = useSession();
+  if (session) {
     window.location.href = "/";
     return null;
   } else {

@@ -3,9 +3,10 @@ import Footer from "./footer";
 import Navbar from "./navbar";
 interface Props {
   children?: React.ReactNode;
+  passedData?: any;
 }
 
-const Layout = ({ children }: Props) => {
+const Layout = ({ children, passedData }: Props) => {
   const siteTitle = "Streamget, spotify streaming widget";
   return (
     <>
@@ -22,7 +23,7 @@ const Layout = ({ children }: Props) => {
         <meta name="twitter:card" content="summary_large_image" />
       </Head>
       <header className="mb-20">
-        <Navbar />
+        <Navbar passedData={passedData} />
       </header>
       <main className="mb-4">{children}</main>
       <Footer />
