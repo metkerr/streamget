@@ -9,10 +9,19 @@ interface HomepageProps {
   progress_ms?: number;
   timestamp?: number;
   images?: [];
+  accessKey?: string;
 }
 
 const Homepage = (props: HomepageProps) => {
-  const { artists, name, duration_ms, progress_ms, timestamp, images } = props;
+  const {
+    artists,
+    name,
+    duration_ms,
+    progress_ms,
+    timestamp,
+    images,
+    accessKey,
+  } = props;
   const [gamePreview, setGamePreview] = useState("Valorant");
   const [widgetFont, setWidgetFont] = useState("Poppins");
   const [widgetFontColor, setWidgetFontColor] = useState("");
@@ -67,7 +76,7 @@ const Homepage = (props: HomepageProps) => {
         widgetFontColor
       )}&sOutline=${textOutline}&outlineColor=${encodeURIComponent(
         outlineColor
-      )}`
+      )}&accessKey=${accessKey}`
     );
     setCopy("Copied!");
 
@@ -216,7 +225,7 @@ const Homepage = (props: HomepageProps) => {
               id="url-preview"
               className="border rounded py-1.5 px-2 truncate"
             >
-              {`https://streamget.app/widget?sTitle=${showTitle}&sArtists=${showArtists}&sCover=${showAlbumCover}&sTimestamp=${showTimestamp}&fontFamily=${widgetFont}&fontColor=${widgetFontColor}&sOutline=${textOutline}&outlineColor=${outlineColor}`}
+              {`https://streamget.app/widget?sTitle=${showTitle}&sArtists=${showArtists}&sCover=${showAlbumCover}&sTimestamp=${showTimestamp}&fontFamily=${widgetFont}&fontColor=${widgetFontColor}&sOutline=${textOutline}&outlineColor=${outlineColor}&accessKey=${accessKey}`}
             </div>
             <button
               className="px-3 bg-green-500 rounded hover:bg-green-600 active:bg-green-700"

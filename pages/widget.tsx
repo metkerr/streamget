@@ -1,5 +1,4 @@
 import WidgetPreview from "../components/widget_preview";
-import { useSession, signIn } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 import getCurrentSong from "../lib/getCurrentSong";
@@ -17,7 +16,6 @@ const Widget = () => {
   const [songData, setSongData] = useState<SongDataState>();
   const widgetSize = { title: 4, artists: 3, cover: 250 };
   const router = useRouter();
-  const { data: session } = useSession();
 
   const {
     sTitle,
@@ -28,6 +26,7 @@ const Widget = () => {
     fontColor,
     sOutline,
     outlineColor,
+    accessKey,
   } = router.query;
 
   const textOutlineStyles = {
@@ -42,13 +41,11 @@ const Widget = () => {
 
   useEffect(() => {
     //@ts-ignore
-    if (session?.error === "RefreshAccessTokenError") signIn();
-
-    //@ts-ignore
-    const accessToken: string = session?.accessToken || "";
+    const accessToken: string = accessKey || "";
     const getSong = async () => {
       if (!accessToken) return null;
       const res = await getCurrentSong(accessToken);
+      console.log(res.status);
 
       if (res.status === 204 || res.status > 400) return null;
 
@@ -64,12 +61,11 @@ const Widget = () => {
     };
 
     getSong().catch(console.error);
-  }, [session]);
+  }, []);
 
   return (
     <>
       {console.log(songData)}
-      {console.log(session)}
       <WidgetPreview
         isNotPreview
         showTitle={sTitle == "true"}

@@ -23,11 +23,18 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
     //return nothing if user not playing any song
     if (res.status === 204 || res.status > 400) {
-      return { props: {} };
+      return { props: { statusCode: res.status } };
     }
 
     //return current song if user play something
+
     const data = await res.json();
+
+    //handle playing state unknown
+    if (data.currently_playing_type == "unknown") {
+      return { props: {} };
+    }
+
     const {
       timestamp,
       item: {
@@ -47,6 +54,8 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         progress_ms,
         timestamp,
         images,
+        statusCode: res.status,
+        accessToken,
       },
     };
   } else {
@@ -61,10 +70,21 @@ interface HomeProps {
   progress_ms: number;
   timestamp: number;
   images: [];
+  statusCode: number;
+  accessToken: string;
 }
 
 export default function Home(props: HomeProps) {
-  const { artists, name, duration_ms, progress_ms, timestamp, images } = props;
+  const {
+    artists,
+    name,
+    duration_ms,
+    progress_ms,
+    timestamp,
+    images,
+    statusCode,
+    accessToken,
+  } = props;
   const { data: session, status } = useSession();
 
   if (status === "loading") {
@@ -87,6 +107,7 @@ export default function Home(props: HomeProps) {
         progress_ms={progress_ms}
         timestamp={timestamp}
         images={images}
+        accessKey={accessToken}
       />
     </Layout>
   );
